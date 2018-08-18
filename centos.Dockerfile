@@ -43,3 +43,11 @@ RUN cd /tmp/ && \
     rm -rf bowtie2-2.3.4.2*
 
 RUN yum -y install perl
+
+COPY setup.py /app/
+COPY zippy /app/zippy
+RUN pip install .
+
+COPY run.py /app/
+
+CMD python /app/run.py

@@ -2,10 +2,9 @@ version: "3"
 
 services:
   zippy:
-    image: zippy
-    #build:
-    #  context: .
-    #  dockerfile: Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "5000:5000"
     volumes:

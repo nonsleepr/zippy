@@ -32,3 +32,14 @@ RUN pip install reportlab==3.3.0
 RUN yum -y install zlib-devel
 RUN pip install pysam==0.9.0
 
+## Bowtie
+RUN yum -y install unzip
+
+#https://newcontinuum.dl.sourceforge.net/project/bowtie-bio/bowtie2/2.3.4.2/bowtie2-2.3.4.2-linux-x86_64.zip
+COPY bowtie2-2.3.4.2-linux-x86_64.zip /tmp/bowtie2-2.3.4.2-linux-x86_64.zip
+RUN cd /tmp/ && \
+    unzip bowtie2-2.3.4.2-linux-x86_64.zip && \
+    mv bowtie2-2.3.4.2-linux-x86_64/bowtie2* /usr/local/bin/ && \
+    rm -rf bowtie2-2.3.4.2*
+
+RUN yum -y install perl

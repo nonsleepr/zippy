@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  zippy:
+    image: zippy
+    #build:
+    #  context: .
+    #  dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - "../data/:/var/local/zippy/resources/"
+      #- "../data/refGene:/var/local/zippy/resources/refGene"
+      #- "../data/00-common_all.vcf.gz:/var/local/zippy/resources/00-common_all.vcf.gz"
+      #- "../data/00-common_all.vcf.gz.tbi:/var/local/zippy/resources/00-common_all.vcf.gz.tbi"
+      #- "../data/human_g1k_v37.fasta.gz:/var/local/zippy/resources/human_g1k_v37.fasta.gz"
+      #- "../data/human_g1k_v37.fasta.fai:/var/local/zippy/resources/human_g1k_v37.fasta.fai"

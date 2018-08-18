@@ -51,3 +51,13 @@ RUN pip install .
 COPY run.py /app/
 
 CMD python /app/run.py
+
+# Zippy data
+
+RUN mkdir -p /var/local/zippy/uploads && \
+    mkdir -p /var/local/zippy/results && \
+	  touch /var/local/zippy/zippy.sqlite && \
+	  touch /var/local/zippy/zippy.log && \
+	  touch /var/local/zippy/.blacklist.cache
+
+#VOLUME /usr/local/zippy/resources/

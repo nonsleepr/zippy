@@ -9,7 +9,6 @@ import hashlib
 import subprocess
 from functools import wraps
 from flask import Flask, render_template, request, redirect, send_from_directory, session, flash, url_for
-from celery import Celery
 from werkzeug.utils import secure_filename
 from . import app
 from .zippy import zippyBatchQuery, zippyPrimerQuery, updateLocation, searchByName, updatePrimerName, updatePrimerPairName, blacklistPair, deletePair, readprimerlocations

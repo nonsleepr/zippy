@@ -4,7 +4,7 @@ FROM centos:centos7.3.1611
 
 MAINTAINER nonsleepr@gmail.com
 
-RUN yum -y install make gcc python-devel zlib-devel unzip perl
+RUN yum -y install make gcc Cython python-devel unzip zlib-devel perl
 
 # Install pip
 # Alternative to `yum -y install python-pip`
@@ -15,11 +15,13 @@ RUN curl -Lo /tmp/get-pip.py https://bootstrap.pypa.io/get-pip.py && \
 # Install bowtie to /usr/local/bin/
 RUN curl -Lo /tmp/bowtie2-2.3.4.2-linux-x86_64.zip \
       https://newcontinuum.dl.sourceforge.net/project/bowtie-bio/bowtie2/2.3.4.2/bowtie2-2.3.4.2-linux-x86_64.zip && \
-RUN cd /tmp/ && \
+    cd /tmp/ && \
     unzip bowtie2-2.3.4.2-linux-x86_64.zip && \
     mv bowtie2-2.3.4.2-linux-x86_64/bowtie2* /usr/local/bin/ && \
     rm -rf bowtie2-2.3.4.2*
 
+
+# bcrypt, primer3-py, reportlab and pysam depend on gcc python-devel and make
 WORKDIR /app
 COPY setup.py /app/
 COPY zippy /app/zippy
@@ -40,6 +42,3 @@ RUN mkdir -p /var/local/zippy/resources && \
 
 # This would be mounted by docker-compose
 #VOLUME /usr/local/zippy/resources/
-
-# Required to run original download script
-#RUN yum -y install make

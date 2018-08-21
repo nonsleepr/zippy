@@ -15,5 +15,4 @@ RUN make install
 # This would be mounted by docker-compose
 #VOLUME /usr/local/zippy/resources/
 
-# Server
-#RUN pip install gunicorn
+CMD /var/local/zippy/venv/bin/gunicorn --workers 3 --bind 0.0.0.0:8000 zippy:app

@@ -2,16 +2,10 @@ version: "3"
 
 services:
   zippy:
-    image: zippy-make
-    #build:
-    #  context: .
-    #  dockerfile: Dockerfile
-    cap_add:
-      - "NET_ADMIN"
-      - "SYS_ADMIN"
-    privileged: true
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     volumes:
-      - "../resources/:/var/local/zippy/resources/"
-      - "./Makefile:/app/Makefile"
+      - "resources/:/var/local/zippy/resources/"

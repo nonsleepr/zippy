@@ -24,7 +24,24 @@ Zippy encourages a workflow of variant confirmations from Variant scoring with S
 For information on the Hamilton Robot program please contact the authors.
 
 ## Install
-The installation procedure installs an Apache2 webserver and installs all required python modules in a *virtualenv* in `/usr/local/zippy`. Genomic data is stored
+
+1. If you didn't yet, clone the repository (requires git which could be
+   installed with `yum -y install git`:
+
+```sh
+git clone https://github.com/nonsleepr/zippy.git
+```
+
+2.  Run following commands as Super User (`sudo`) in the repo folder:
+
+```sh
+sudo make dependencies
+sudo make install
+sudo make resources
+sudo make run
+```
+
+After the last command the app should be available on the port `8000`.
 
 ### Docker setup
 The easiest way to test zippy without changing your existing system is to run zippy from a docker container.

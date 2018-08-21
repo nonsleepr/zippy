@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve zippy
+After=network.target
+
+[Service]
+User=zippy
+Group=zippy
+WorkingDirectory=/var/local/zippy
+Environment="PATH=/var/local/zippy/venv/bin"
+ExecStart=gunicorn --workers 3 --bind 0.0.0.0:8000 zippy:app
+
+[Install]
+WantedBy=multi-user.target

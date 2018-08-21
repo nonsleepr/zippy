@@ -1,11 +1,11 @@
-.PHONY: all clean mysql data resources dependencies variation annotation genome genome-index pip bowtie zippy-venv
+.PHONY: all clean mysql data resources dependencies variation annotation genome genome-index pip bowtie zippy-venv run
 
 # could be tested like this: make ZIPPYPATH=$PWD
 ZIPPYPATH=/var/local/zippy
 
 all: dependencies install resources
 
-resources: dependencies annotation genome genome-index
+resources: annotation genome genome-index
 
 annotation: $(ZIPPYPATH)/resources/refGene variation
  
@@ -70,7 +70,7 @@ bowtie: /usr/local/bin/bowtie2-build
 
 packages:
 	yum -y install epel-release
-	yum -y install make gcc python-devel unzip zlib-devel perl mysql nginx
+	yum -y install make gcc python-devel unzip zlib-devel perl mysql supervisor
 
 dependencies: packages bowtie
 
@@ -93,3 +93,13 @@ install: zippy-venv zippy-package $(ZIPPYPATH)/zippy.json
 	$(ZIPPYPATH)/venv/bin/pip install gunicorn
 	mkdir -p $(ZIPPYPATH)/{resources,uploads,results}
 	touch $(ZIPPYPATH)/{zippy.sqlite,zippy.log,.blacklist.cache}
+	# Register systemd service
+	cp install/zippy.service /etc/systemd/system/zippy.service
+
+run:
+	groupadd zippy
+	useradd -rMg zippy zippy
+	# Start
+	systemctl start zippy
+	# Start on Boot
+	systemctl enable zippy

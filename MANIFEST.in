@@ -1,8 +1,4 @@
-recursive-include yourapplication/templates *
-recursive-include yourapplication/static *
-include package-requirements.txt
-include *.txt
-include *.md
-recursive-include static
-include zippy.json
-include Makefile
+recursive-include zippy/templates *
+recursive-include zippy/static *
+include zippy/zippy.json
+include requirements.txt

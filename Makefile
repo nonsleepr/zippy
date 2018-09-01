@@ -1,4 +1,4 @@
-.PHONY: all clean mysql data resources dependencies variation annotation genome genome-index pip bowtie zippy-venv run
+.PHONY: all clean mysql data resources dependencies variation annotation genome genome-index pip bowtie zippy-venv zippy-package run
 
 # could be tested like this: make ZIPPYPATH=$PWD
 ZIPPYPATH=/var/local/zippy
@@ -87,18 +87,18 @@ zippy-package: zippy-venv
 	$(ZIPPYPATH)/venv/bin/pip install .
 
 $(ZIPPYPATH)/zippy.json: zippy-package
-	ln -s $(ZIPPYPATH)/venv/lib/python2.7/site-packages/zippy/zippy.json $@
+	ln -s $(ZIPPYPATH)/venv/lib/python2.7/site-packages/zippy/zippy.json $@ || true
 
 install: zippy-venv zippy-package $(ZIPPYPATH)/zippy.json
 	$(ZIPPYPATH)/venv/bin/pip install gunicorn
 	mkdir -p $(ZIPPYPATH)/{resources,uploads,results}
 	touch $(ZIPPYPATH)/{zippy.sqlite,zippy.log,.blacklist.cache}
 	# Register systemd service
+	groupadd zippy
+	useradd -rMg zippy zippy
 	cp install/zippy.service /etc/systemd/system/zippy.service
 
 run:
-	groupadd zippy
-	useradd -rMg zippy zippy
 	# Start
 	systemctl start zippy
 	# Start on Boot

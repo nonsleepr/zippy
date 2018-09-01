@@ -1,18 +1,16 @@
-FROM centos:centos7.3.1611
-
-# docker build -t zippy2 -f centos.Dockerfile .
+FROM centos:7
 
 MAINTAINER nonsleepr@gmail.com
 
-RUN yum -y install epel-release && \
-    yum -y install make gcc python-devel unzip zlib-devel perl mysql nginx
+RUN yum -y install make
 
-# bcrypt, primer3-py, reportlab and pysam depend on gcc python-devel and make
 WORKDIR /app
 COPY . /app/
+RUN make dependencies
 RUN make install
+#RUN make resources
 
 # This would be mounted by docker-compose
-#VOLUME /usr/local/zippy/resources/
+VOLUME [ "/var/local/zippy/resources/" ]
 
 CMD /var/local/zippy/venv/bin/gunicorn --workers 3 --bind 0.0.0.0:8000 zippy:app

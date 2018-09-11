@@ -40,13 +40,13 @@ $(ZIPPYPATH)/resources/human_g1k_v37.bowtie.%: $(ZIPPYPATH)/resources/human_g1k_
 genome: $(ZIPPYPATH)/resources/human_g1k_v37.fasta $(ZIPPYPATH)/resources/human_g1k_v37.fasta.fai
 
 $(ZIPPYPATH)/resources/human_g1k_v37.fasta:
-	mkdir -p resources
+	mkdir -p $(ZIPPYPATH)/resources
 	@echo "Downloading genome..."
-	@curl -Ls http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/human_g1k_v37.fasta.gz | gunzip -c > $@
+	@curl -L http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/human_g1k_v37.fasta.gz | gunzip -c > $@
 	@echo "Ok"
 
 $(ZIPPYPATH)/resources/human_g1k_v37.fasta.fai:
-	mkdir -p resources
+	mkdir -p $(ZIPPYPATH)/resources
 	@echo "Downloading genome index..."
 	@curl -Lo $@ http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/human_g1k_v37.fasta.fai
 	@echo "Ok"
@@ -55,7 +55,7 @@ pip: /usr/bin/pip
 
 # Should be run as root
 /usr/bin/pip:
-	curl -Ls https://bootstrap.pypa.io/get-pip.py | python
+	curl -L https://bootstrap.pypa.io/get-pip.py | python
 
 bowtie: /usr/local/bin/bowtie2-build
 

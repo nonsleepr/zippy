@@ -42,8 +42,9 @@ genome: $(ZIPPYPATH)/resources/human_g1k_v37.fasta $(ZIPPYPATH)/resources/human_
 $(ZIPPYPATH)/resources/human_g1k_v37.fasta:
 	mkdir -p $(ZIPPYPATH)/resources
 	@echo "Downloading genome..."
-	@curl -L http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/human_g1k_v37.fasta.gz | gunzip -c > $@
+	@curl -L http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/human_g1k_v37.fasta.gz | gunzip -c > $@ || [[ $$? == 2 ]]
 	@echo "Ok"
+
 
 $(ZIPPYPATH)/resources/human_g1k_v37.fasta.fai:
 	mkdir -p $(ZIPPYPATH)/resources

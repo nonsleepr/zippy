@@ -1,9 +1,9 @@
-.PHONY: all clean mysql data resources dependencies variation annotation genome genome-index pip bowtie zippy-venv zippy-package run
+.PHONY: all clean mysql data resources dependencies variation annotation genome genome-index pip bowtie zippy-venv zippy-package run uninstall
 
 # could be tested like this: make ZIPPYPATH=$PWD
 ZIPPYPATH=/var/local/zippy
 
-all: dependencies install resources
+all: dependencies install resources run
 
 resources: annotation genome genome-index
 
@@ -94,9 +94,18 @@ install: zippy-venv zippy-package $(ZIPPYPATH)/zippy.json
 	mkdir -p $(ZIPPYPATH)/{resources,uploads,results}
 	touch $(ZIPPYPATH)/{zippy.sqlite,zippy.log,.blacklist.cache}
 	# Register systemd service
-	groupadd zippy
-	useradd -rMg zippy zippy
+	grep -q ^zippy: /etc/group || groupadd zippy
+	grep -q ^zippy: /etc/passwd || useradd -rMg zippy zippy
 	cp install/zippy.service /etc/systemd/system/zippy.service
+	systemctl daemon-reload
+
+uninstall:
+	systemctl stop zippy || true
+	systemctl stop zippy || true
+	rm /etc/systemd/system/zippy.service || true
+	userdel zippy || true
+	groupdel zippy || true
+	rm -r ${ZIPPYPATH} || true
 
 run:
 	# Start

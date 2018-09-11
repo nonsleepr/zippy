@@ -41,6 +41,8 @@ sudo make resources
 sudo make run
 ```
 
+Or simply run `sudo make all`.
+
 After the last command the app should be available on the port `8000`.
 
 ### Docker setup

@@ -34,7 +34,7 @@ genome-index: bowtie $(ZIPPYPATH)/resources/human_g1k_v37.bowtie.1.bt2
 
 $(ZIPPYPATH)/resources/human_g1k_v37.bowtie.%: $(ZIPPYPATH)/resources/human_g1k_v37.fasta $(ZIPPYPATH)/resources/human_g1k_v37.fasta.fai
 	@echo "Bowtieing genome..."
-	@bowtie2-build human_g1k_v37.fasta human_g1k_v37.bowtie
+	@/usr/local/bin/bowtie2-build $(ZIPPYPATH)/resources/human_g1k_v37.fasta $(ZIPPYPATH)/resources/human_g1k_v37.bowtie
 	@echo "Ok"
 
 genome: $(ZIPPYPATH)/resources/human_g1k_v37.fasta $(ZIPPYPATH)/resources/human_g1k_v37.fasta.fai
